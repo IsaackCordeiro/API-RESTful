@@ -9,7 +9,6 @@ Antes de começar, certifique-se de ter as seguintes ferramentas instaladas no W
 ### 1.1 Java JDK 17
 O Play Framework requer uma versão LTS específica. Estamos usando a **17**.
 * **Verificar instalação:** Abra o CMD e digite `java -version`.
-* **Se não tiver:** Baixe e instale o [Eclipse Adoptium (Temurin) JDK 17](https://adoptium.net/temurin/releases/?version=17).
 
 ### 1.2 SBT (Scala Build Tool)
 Gerenciador de dependências e construção do projeto.
