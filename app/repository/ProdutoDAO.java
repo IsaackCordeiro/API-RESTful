@@ -1,8 +1,8 @@
 package repository;
 
 import jakarta.persistence.TypedQuery;
-import model.PagedResult;
-import model.Produto;
+import models.PagedResult;
+import models.Produto;
 import play.db.jpa.JPAApi;
 
 import javax.inject.Inject;

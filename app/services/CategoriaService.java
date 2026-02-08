@@ -1,6 +1,6 @@
 package services;
 
-import model.Categoria;
+import models.Categoria;
 import repository.CategoriaRepository;
 
 import javax.inject.Inject;

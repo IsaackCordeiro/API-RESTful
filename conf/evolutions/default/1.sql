@@ -34,7 +34,8 @@ CREATE TABLE USUARIO (
                          ID BIGINT AUTO_INCREMENT PRIMARY KEY,
                          NOME VARCHAR(255) NOT NULL,
                          EMAIL VARCHAR(255) NOT NULL,
-                         SENHA VARCHAR(255) NOT NULL
+                         SENHA VARCHAR(255) NOT NULL,
+                         ROLE VARCHAR(20) NOT NULL
 ) ENGINE=InnoDB;
 
 -- 5. Tabela PRODUTO (Depende de CATEGORIA e FORNECEDOR)

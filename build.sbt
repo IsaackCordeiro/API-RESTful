@@ -17,7 +17,8 @@ libraryDependencies ++= Seq(
   javaJpa, // A API do JPA para Play
   "org.hibernate.orm" % "hibernate-core" % "6.4.4.Final",
   "org.mindrot" % "jbcrypt" % "0.4",
-  "com.auth0" % "java-jwt" % "4.4.0"
+  "com.auth0" % "java-jwt" % "4.4.0",
+  "org.mockito" % "mockito-core" % "5.11.0" % Test
 )
 
 libraryDependencies += javaJdbc % Test

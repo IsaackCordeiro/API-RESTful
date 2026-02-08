@@ -1,8 +1,8 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import model.PagedResult;
-import model.Produto;
+import models.PagedResult;
+import models.Produto;
 import play.libs.Json;
 import play.mvc.*;
 import repository.ProdutoDAO;
@@ -70,7 +70,7 @@ public class ProdutoController extends Controller {
         // Garante que o ID do objeto é o mesmo da URL
         produtoParaAtualizar.id = id;
 
-        // Verifica se existe antes de tentar atualizar (opcional, mas recomendado)
+        // Verifica se existe antes de tentar atualizar
         if (produtoDAO.findById(id) == null) {
             return notFound(Json.newObject().put("message", "Produto não existe para ser atualizado"));
         }

@@ -1,6 +1,6 @@
 package repository;
 
-import model.Categoria;
+import models.Categoria;
 import play.db.jpa.JPAApi;
 
 import javax.inject.Inject;

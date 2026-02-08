@@ -8,9 +8,9 @@
 
         <non-jta-data-source>DefaultDS</non-jta-data-source>
 
-        <class>model.Produto</class>
-        <class>model.Categoria</class>
-        <class>model.Fornecedor</class>
+        <class>models.Produto</class>
+        <class>models.Categoria</class>
+        <class>models.Fornecedor</class>
 
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
