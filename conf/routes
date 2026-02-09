@@ -17,7 +17,7 @@ DELETE  /produtos/:id       controllers.ProdutoController.delete(id: Long)
 
 # Rotas de Categorias API
 
-GET     /categorias              controllers.CategoriaController.listarCategorias
+GET     /categorias              controllers.CategoriaController.listarCategorias(request: Request)
 GET     /categorias/:id          controllers.CategoriaController.buscarCategoria(id: Long)
 POST    /categorias              controllers.CategoriaController.criarCategoria(request: Request)
 PUT     /categorias/:id          controllers.CategoriaController.atualizarCategoria(id: Long, request: Request)

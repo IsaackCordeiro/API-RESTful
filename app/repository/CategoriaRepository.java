@@ -30,6 +30,48 @@ public class CategoriaRepository {
         });
     }
 
+    public List<Categoria> findWithFilter(String descricao, int page, int size) {
+        return jpa.withTransaction(entityManager -> {
+
+            String jpql = "SELECT c FROM Categoria c WHERE 1=1";
+
+            if (descricao != null && !descricao.isBlank()) {
+                jpql += " AND LOWER(c.descricao) LIKE LOWER(:descricao)";
+            }
+
+            TypedQuery<Categoria> query = entityManager.createQuery(jpql, Categoria.class);
+
+            if (descricao != null && !descricao.isBlank()) {
+                query.setParameter("descricao", "%" + descricao + "%");
+            }
+
+            query.setFirstResult(page * size);
+            query.setMaxResults(size);
+
+            return query.getResultList();
+        });
+    }
+
+    public long countWithFilter(String descricao) {
+        return jpa.withTransaction(entityManager -> {
+
+            String jpql = "SELECT COUNT(c) FROM Categoria c WHERE 1=1";
+
+            if (descricao != null && !descricao.isBlank()) {
+                jpql += " AND LOWER(c.descricao) LIKE LOWER(:descricao)";
+            }
+
+            TypedQuery<Long> query = entityManager.createQuery(jpql, Long.class);
+
+            if (descricao != null && !descricao.isBlank()) {
+                query.setParameter("descricao", "%" + descricao + "%");
+            }
+
+            return query.getSingleResult();
+        });
+    }
+
+
     public Categoria create(Categoria categoria) {
         return jpa.withTransaction(entityManager -> {
             entityManager.persist(categoria);

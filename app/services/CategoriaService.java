@@ -106,4 +106,17 @@ public class CategoriaService {
         }
         repository.delete(id);
     }
+
+    public List<Categoria> listarComFiltro(String descricao, int page, int size) {
+        if (page < 0 || size <= 0) {
+            throw new RuntimeException("Parâmetros de paginação inválidos");
+        }
+
+        return repository.findWithFilter(descricao, page, size);
+    }
+
+    public long contarComFiltro(String descricao) {
+        return repository.countWithFilter(descricao);
+    }
+
 }

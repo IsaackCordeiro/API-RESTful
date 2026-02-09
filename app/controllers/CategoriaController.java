@@ -1,6 +1,7 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Categoria;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -21,10 +22,29 @@ public class CategoriaController extends Controller {
     }
 
     //GET /categorias
-    public Result listarCategorias() {
-        List<Categoria> categorias = service.listarCategorias();
-        return ok(Json.toJson(categorias));
+//    public Result listarCategorias() {
+//        List<Categoria> categorias = service.listarCategorias();
+//        return ok(Json.toJson(categorias));
+//    }
+
+    public Result listarCategorias(Http.Request request) {
+
+        String descricao = request.getQueryString("descricao");
+        int page = Integer.parseInt(request.getQueryString("page") != null ? request.getQueryString("page") : "0");
+        int size = Integer.parseInt(request.getQueryString("size") != null ? request.getQueryString("size") : "10");
+
+        List<Categoria> categorias = service.listarComFiltro(descricao, page, size);
+        long total = service.contarComFiltro(descricao);
+
+        ObjectNode resposta = Json.newObject();
+        resposta.put("page", page);
+        resposta.put("size", size);
+        resposta.put("total", total);
+        resposta.set("dados", Json.toJson(categorias));
+
+        return ok(resposta);
     }
+
 
     //GET /categorias/:id
     public Result buscarCategoria(Long id) {
