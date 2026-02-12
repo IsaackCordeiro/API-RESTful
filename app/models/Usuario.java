@@ -14,16 +14,17 @@ public class Usuario {
     @Column(name = "ID")
     private Long id;
 
-
     @Constraints.Required
     @Column(name = "NOME")
     private String name;
+
     @Constraints.Required
     @Constraints.Email
     @Column(unique = true, name = "EMAIL")
     private String email;
 
     public enum Role {
+        ROOT,
         ADMIN,
         USER
     }
@@ -76,5 +77,9 @@ public class Usuario {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getSenha() {
+        return senha;
     }
 }
