@@ -23,12 +23,11 @@ public class UsuarioRepository {
      */
     public PagedResult<Usuario> findList(int page, int pageSize, String termo) {
         return jpaApi.withTransaction(em -> {
-            // Montagem da Query Dinâmica
             String hql = "FROM Usuario u WHERE 1=1";
             if (termo != null && !termo.trim().isEmpty()) {
                 hql += " AND (lower(u.nome) LIKE :termo OR lower(u.email) LIKE :termo OR lower(u.role) LIKE :termo)";
             }
-            hql += " ORDER BY u.id DESC"; // Ordenar pelo mais recente
+            hql += " ORDER BY u.id DESC";
 
             // Query de Dados
             TypedQuery<Usuario> query = em.createQuery(hql, Usuario.class);
@@ -41,7 +40,6 @@ public class UsuarioRepository {
             query.setMaxResults(pageSize);
             List<Usuario> data = query.getResultList();
 
-            // Query de Contagem (Total de registros para calcular páginas)
             String countHql = "SELECT count(u) FROM Usuario u WHERE 1=1";
             if (termo != null && !termo.trim().isEmpty()) {
                 countHql += " AND (lower(u.nome) LIKE :termo OR lower(u.email) LIKE :termo OR lower(u.role) LIKE :termo)";
@@ -71,7 +69,6 @@ public class UsuarioRepository {
 
     public Usuario create(Usuario usuario) {
         return jpaApi.withTransaction(em -> {
-            // O ID deve ser nulo para criar um novo
             usuario.setId(null);
             em.persist(usuario);
             return usuario;
@@ -106,13 +103,13 @@ public class UsuarioRepository {
      * 2. BUSCAR POR EMAIL
      */
     public Optional<Usuario> findByEmail(String email) {
-        return Optional.ofNullable(jpaApi.withTransaction(em -> {
+        return jpaApi.withTransaction(em -> {
             String jpql = "SELECT u FROM Usuario u WHERE u.email = :pEmail";
             TypedQuery<Usuario> query = em.createQuery(jpql, Usuario.class);
             query.setParameter("pEmail", email);
 
-            return query.getSingleResult();
-        }));
+            return query.getResultStream().findFirst();
+        });
     }
 
 }

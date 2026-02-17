@@ -164,7 +164,7 @@ public class UsuarioControllerTest extends WithApplication {
         mockLogin(Role.ADMIN, "admin@empresa.com");
 
         JsonNode jsonEntrada = Json.newObject()
-                .put("nome", "Novo User")
+                .put("name", "Novo User")
                 .put("email", "duplicado@teste.com")
                 .put("senha", "123456")
                 .put("role", "USER");
@@ -197,7 +197,7 @@ public class UsuarioControllerTest extends WithApplication {
         mockLogin(Role.ROOT, "root@sistema.com");
 
         JsonNode jsonEntrada = Json.newObject()
-                .put("nome", "Novo Usuario")
+                .put("name", "Novo Usuario")
                 .put("email", "novo@teste.com")
                 .put("senha", "123456")
                 .put("role", "USER");
@@ -227,7 +227,7 @@ public class UsuarioControllerTest extends WithApplication {
         mockLogin(Role.ADMIN, "admin@sistema.com");
 
         JsonNode jsonEntrada = Json.newObject()
-                .put("nome", "Novo Admin")
+                .put("name", "Novo Admin")
                 .put("email", "futuroadmin@teste.com")
                 .put("senha", "123456")
                 .put("role", "ADMIN");
@@ -253,7 +253,7 @@ public class UsuarioControllerTest extends WithApplication {
         mockLogin(Role.ADMIN, "admin@sistema.com");
 
         JsonNode jsonNovosDados = Json.newObject()
-                .put("nome", "Nome Editado")
+                .put("name", "Nome Editado")
                 .put("email", "velho@teste.com")
                 .put("role", "USER");
 
@@ -287,7 +287,7 @@ public class UsuarioControllerTest extends WithApplication {
         Long idInexistente = 999L;
         mockLogin(Role.ADMIN, "admin@sistema.com");
 
-        JsonNode json = Json.newObject().put("nome", "Qualquer Coisa");
+        JsonNode json = Json.newObject().put("name", "Qualquer Coisa");
 
         when(mockDao.findById(idInexistente)).thenReturn(null);
 

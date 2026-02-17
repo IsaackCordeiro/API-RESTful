@@ -1,6 +1,8 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import controllers.security.Secured;
 import controllers.security.SecuredAction;
 import models.PagedResult;
@@ -13,6 +15,7 @@ import play.mvc.Result;
 import repository.UsuarioRepository;
 
 import javax.inject.Inject;
+import java.io.IOException;
 import java.util.Optional;
 @Secured({"ROOT", "ADMIN"})
 public class UsuarioController extends Controller {
@@ -83,11 +86,11 @@ public class UsuarioController extends Controller {
 
         Usuario salvo = usuarioRepository.create(usuario);
 
-        return created(Json.toJson(salvo));
+        return created(Json.toJson(salvo)).withHeader("Location", "/usuarios/" + salvo.getId());
     }
 
     // PUT /usuarios/:id
-    public Result update(Long id, Http.Request request) {
+    public Result update(Long id, Http.Request request) throws IOException {
         JsonNode json = request.body().asJson();
         if (json == null) {
             return badRequest(Json.newObject()
@@ -100,13 +103,20 @@ public class UsuarioController extends Controller {
 
         usuarioParaAtualizar.setId(id);
 
-        if (usuarioRepository.findById(id) == null) {
+        Usuario usuarioOriginal = usuarioRepository.findById(id);
+
+        if (usuarioOriginal == null) {
             return notFound(Json.newObject()
                     .put("codigo", "USUARIO_NAO_EXISTE")
                     .put("message", "Usuário não existe para ser atualizado"));
         }
 
-        Usuario atualizado = usuarioRepository.update(usuarioParaAtualizar);
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectReader reader = mapper.readerForUpdating(usuarioOriginal);
+
+        Usuario usuarioParaSalvar = reader.readValue(json);
+
+        Usuario atualizado = usuarioRepository.update(usuarioParaSalvar);
         return ok(Json.toJson(atualizado));
     }
 
